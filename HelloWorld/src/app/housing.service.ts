@@ -7,6 +7,20 @@ import { HousingLocation } from './housinglocation';
 export class HousingService {
   readonly baseUrl = 'https://angular.io/assets/images/tutorials/faa';
 
+  url = 'http://localhost:3000/locations';
+
+  async getAllHousingLocations(): Promise<HousingLocation[]> {
+    const data = await fetch(this.url);
+    return await data.json() ?? [];
+  }
+
+
+
+  async getHousingLocationById(id: number): Promise<HousingLocation | undefined> {
+    const data = await fetch(`${this.url}/${id}`);
+    return await data.json() ?? {};
+  }
+  
   protected housingLocationList: HousingLocation[] = [
     {
       id: 0,
@@ -110,13 +124,13 @@ export class HousingService {
     }
   ];
 
-  getAllHousingLocations(): HousingLocation[] {
-    return this.housingLocationList;
-  }
+  // getAllHousingLocations(): HousingLocation[] {
+  //   return this.housingLocationList;
+  // }
 
-  getHousingLocationById(id: number): HousingLocation | undefined {
-    return this.housingLocationList.find(housingLocation => housingLocation.id === id);
-  }
+  // getHousingLocationById(id: number): HousingLocation | undefined {
+  //   return this.housingLocationList.find(housingLocation => housingLocation.id === id);
+  // }
 
   submitApplication(firstName: string, lastName: string, email: string) {
     console.log(`Homes application received: firstName: ${firstName}, lastName: ${lastName}, email: ${email}.`);
